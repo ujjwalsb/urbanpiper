@@ -45,10 +45,11 @@ def newslist(request):
         else:
             pass
 
-    queryset_list = hackerNewsAPI.objects.all()
+    queryset_list = hackerNewsAPI.objects.get_queryset().order_by('serial_id')
     paginator = Paginator(queryset_list, 30)
     page = request.GET.get('page')
     queryset = paginator.get_page(page)
+    count_list = queryset_list.count()
 
     query = request.GET.get('q')
     if query:
@@ -56,9 +57,11 @@ def newslist(request):
         paginator = Paginator(queryset_list, 30)
         page = request.GET.get('page')
         queryset = paginator.get_page(page)
+        count_list = queryset_list.count()
 
     context = {
-        'queryset': queryset
+        'queryset': queryset,
+        'count_list': count_list
     }
     return render(request, "newslist.html", context)
 
