@@ -19,13 +19,13 @@ sentiment_api_key = "fe3100503897f9b3da5d85ed7d2437c4"
 base_item_url = "https://hacker-news.firebaseio.com/v0/item/"
 end_point_url = ".json"
 
-topstories_link_ids = 'https://hacker-news.firebaseio.com/v0/topstories.json'
-response = requests.request("GET", topstories_link_ids, headers=headers)
-
-topstories_ids = json.loads(response.text)
-# top_30_ids = topstories_ids[:30]              // To fetch from top 30 news only.
 
 def newslist(request):
+    topstories_link_ids = 'https://hacker-news.firebaseio.com/v0/topstories.json'
+    response = requests.request("GET", topstories_link_ids, headers=headers)
+
+    topstories_ids = json.loads(response.text)
+    # top_30_ids = topstories_ids[:30]              // To fetch from top 30 news only.
     # for ids in top_30_ids:                    // If fetching from top 30 items
     for ids in topstories_ids:
         if not hackerNewsAPI.objects.filter(article_id=ids).exists():
