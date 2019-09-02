@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}
+  <title>News List</title>
+{% endblock title %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="text-center">Hacker News</h1><br/>
+    <form method="GET" action="" class="form my-2 my-lg-0">
+      <div class="input-group">
+        <input class="form-control" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
+        <span class="input-group-btn">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </span>
+      </div>
+    </form>
+    <br/><br/>
+  </div>
+  <div class="container-fluid">
+    <table class="table table-hover text-center">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">S.no.</th>
+          <th scope="col">Username</th>
+          <th scope="col">Title</th>
+          <th scope="col">URL</th>
+          <th scope="col">Upvotes</th>
+          <th scope="col">Sentiment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for news in queryset %}
+        <tr>
+          <td>{{ news.serial_id }}</td>
+          <td style="color:darkgreen;">{{ news.username }}</td>
+          <td><b>{{ news.title }}</b></td>
+          <td style="word-break: break-word !important;"><a href="{{ news.url }}" class="btn btn-link text-decoration-none">{{ news.url }}</a></td>
+          <td>{{ news.score }}</td>
+          <td style="color:chocolate;">{{ news.sentiment }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br/><br/><hr/>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% if queryset.has_previous %}
+        <li class="page-item"><a class="page-link" style="background-color: lemonchiffon;" href="?page=1">&laquo; First</a></li>
+        <li class="page-item"><a class="page-link" style="background-color: lemonchiffon;" href="?page={{ queryset.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      <li class="page-item page-link font-weight-bold" style="color: #000;">Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}</li>
+      {% if queryset.has_next %}
+        <li class="page-item"><a class="page-link" style="background-color: lemonchiffon;" href="?page={{ queryset.next_page_number }}">Next</a></li>
+        <li class="page-item"><a class="page-link" style="background-color: lemonchiffon;" href="?page={{ queryset.paginator.num_pages }}">Last &raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% endblock body %}
+
