@@ -1,7 +1,7 @@
 aylien-apiclient==0.7.0
 certifi==2019.6.16
 chardet==3.0.4
-Django==2.2.4
+Django==2.2.13
 httplib2==0.13.1
 idna==2.8
 pytz==2019.2
